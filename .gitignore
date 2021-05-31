@@ -30,5 +30,5 @@
 *.exe
 *.out
 *.app
-Mask_RCNN/mask_rcnn_coco.h5
-Mash_RCNN/data
+mask_rcnn/mask_rcnn_coco.h5
+mask_rcnn/data
