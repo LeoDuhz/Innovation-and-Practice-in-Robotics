@@ -142,7 +142,7 @@ class CocoDataset(utils.Dataset):
                 height=coco.imgs[i]["height"],
                 annotations=coco.loadAnns(coco.getAnnIds(
                     imgIds=[i], catIds=class_ids, iscrowd=None)))
-            print('coco class: ', coco.imgs[i]['file_name'])
+            # print('coco class: ', coco.imgs[i]['file_name'])
         if return_coco:
             return coco
 
@@ -473,6 +473,9 @@ if __name__ == '__main__':
     # Load weights
     print("Loading weights ", model_path)
     model.load_weights(model_path, by_name=True)
+
+    from tensorflow.python.client import device_lib
+    print(device_lib.list_local_devices())
 
     # Train or evaluate
     if args.command == "train":
