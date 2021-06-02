@@ -33,4 +33,6 @@
 mask_rcnn/mask_rcnn_coco.h5
 mask_rcnn/data
 mmlab/linemod
-../.vscode/
+mmlab/data
+.vscode/
+.vscode/settings.json

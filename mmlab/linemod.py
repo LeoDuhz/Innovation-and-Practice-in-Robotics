@@ -15,14 +15,15 @@ data_root = './linemod'
 img_dir = 'images'
 ann_dir = 'annotations'
 
-classes = ('ape', 'others')
-palette = [[255,255,255], [0,0,0]]
+classes = ('others', 'ape')
+palette = [[0,0,0], [255,255,255]]
 
 #split train/val dataset randomly
 split_dir = 'splits'
 mmcv.mkdir_or_exist(osp.join(data_root, split_dir))
 filename_list = [osp.splitext(filename)[0] for filename in mmcv.scandir(
     osp.join(data_root, ann_dir), suffix='.png')]
+# print('filename:', filename_list)
 with open(osp.join(data_root, split_dir, 'train.txt'), 'w') as f:
   # select first 4/5 as train set
   train_length = int(len(filename_list)*4/5)
@@ -40,7 +41,8 @@ class LineModDataset(CustomDataset):
 
     def __init__(self, split, **kwargs):
         super().__init__(img_suffix='.png', seg_map_suffix='.png', split=split, **kwargs)
-        assert osp.exits(self.img_dir) and self.split is not None
+        print('img_dir:', self.img_dir)
+        assert osp.exists(self.img_dir) and self.split is not None
 
 cfg = Config.fromfile('./fast_scnn.py')
 # Since we use ony one GPU, BN is used instead of SyncBN
@@ -116,7 +118,7 @@ cfg.data.test.split = 'splits/val.txt'
 # Set up working dir to save files and logs.
 cfg.work_dir = './work_dirs/'
 
-cfg.runner.max_iters = 200
+cfg.runner.max_iters = 10000
 cfg.log_config.interval = 10
 cfg.evaluation.interval = 200
 cfg.checkpoint_config.interval = 200
@@ -142,6 +144,8 @@ model.CLASSES = datasets[0].CLASSES
 mmcv.mkdir_or_exist(osp.abspath(cfg.work_dir))
 train_segmentor(model, datasets, cfg, distributed=False, validate=True, 
                 meta=dict())
+
+
 
 
     
