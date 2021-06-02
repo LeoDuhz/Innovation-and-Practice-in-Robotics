@@ -7,4 +7,7 @@
 
 - [x] 跑通REDE
 - [x] Mask-RCNN 可行版本
+- [x] fuck Mask-RCNN
+- [ ] Construct MMLab segmentation dataset
+- [ ] Train in MMLab
 - [ ] Mask-RCNN linemod dataset preprocess
