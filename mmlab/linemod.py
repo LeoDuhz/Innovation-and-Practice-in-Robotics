@@ -139,6 +139,7 @@ model = build_segmentor(
     cfg.model, train_cfg=cfg.get('train_cfg'), test_cfg=cfg.get('test_cfg'))
 # Add an attribute for visualization convenience
 model.CLASSES = datasets[0].CLASSES
+model.PALETTE = datasets[0].PALETTE
 
 # Create work_dir
 mmcv.mkdir_or_exist(osp.abspath(cfg.work_dir))
