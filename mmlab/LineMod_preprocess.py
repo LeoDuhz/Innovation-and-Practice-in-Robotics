@@ -24,7 +24,7 @@ def main():
     args = parse_args()
     dataset_path = args.dataset_path
     if args.out_dir is None:
-        out_dir = osp.join('data', 'MilkBro')
+        out_dir = osp.join('data', 'linemod', '15')
     else:
         out_dir = args.out_dir
 
@@ -46,8 +46,8 @@ def main():
     print('Generating training dataset...')
 
     # print(args.tmp_dir, len(os.listdir(tmp_dir)))
-    assert len(os.listdir(args.tmp_dir)) == LINEMOD_LEN, \
-        'len(os.listdir(tmp_dir)) != {}'.format(LINEMOD_LEN)
+    # assert len(os.listdir(args.tmp_dir)) == LINEMOD_LEN, \
+    #     'len(os.listdir(tmp_dir)) != {}'.format(LINEMOD_LEN)
 
     for img_name in sorted(os.listdir(args.tmp_dir))[:TRAINING_LEN]:
         img = mmcv.imread(osp.join(args.tmp_dir, img_name))
@@ -88,8 +88,8 @@ def main():
 
     print('Generating training dataset...')
 
-    assert len(os.listdir(args.tmp_dir)) == LINEMOD_LEN, \
-        'len(os.listdir(tmp_dir)) != {}'.format(LINEMOD_LEN)
+    # assert len(os.listdir(args.tmp_dir)) == LINEMOD_LEN, \
+    #     'len(os.listdir(tmp_dir)) != {}'.format(LINEMOD_LEN)
 
     for img_name in sorted(os.listdir(args.tmp_dir))[:TRAINING_LEN]:
         img = mmcv.imread(osp.join(args.tmp_dir, img_name))

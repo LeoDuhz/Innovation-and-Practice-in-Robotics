@@ -1,6 +1,7 @@
 import mmcv
 import matplotlib.pyplot as plt
 import os.path as osp
+import os
 from PIL import Image
 from mmseg.datasets.builder import DATASETS
 from mmseg.datasets.custom import CustomDataset
@@ -11,10 +12,17 @@ from mmseg.models import build_segmentor
 from mmseg.apis import train_segmentor
 from mmseg.apis import inference_segmentor, init_segmentor, show_result_pyplot
 from mmseg.core.evaluation import get_palette
+from numpy.core.records import array
 import torch
+import numpy as np
+
+def mkdir_or_exist(path):
+    exist_flag = osp.exists(path)
+    if not exist_flag:
+        os.makedirs(path)
 
 #dirs config
-data_root = './linemod'
+data_root = './data/linemod/01'
 img_dir = 'images'
 ann_dir = 'annotations'
 
@@ -148,14 +156,35 @@ datasets = [build_dataset(cfg.data.train)]
 # train_segmentor(model, datasets, cfg, distributed=False, validate=True, 
 #                 meta=dict())
 
-checkpoint_file = './work_dirs/iter_10000.pth'
+checkpoint_file = './ape/iter_8000.pth'
 config_file = './fast_scnn.py'
-model = init_segmentor(config_file, checkpoint_file, device='cuda:0')
+model = init_segmentor(cfg, checkpoint_file, device='cuda:0')
 # model = build_segmentor(
 #     cfg.model, train_cfg=cfg.get('train_cfg'), test_cfg=cfg.get('test_cfg'))
-img = mmcv.imread('linemod/images/0000.png')
 
-# model.cfg = cfg
-result = inference_segmentor(model, img)
-plt.figure(figsize=(8, 6))
-show_result_pyplot(model, img, result, palette)
+tmp_dir = 'data/linemod/01/images'
+save_dir = 'data/linemod/01/our_mask_new'
+mkdir_or_exist(save_dir)
+for img_name in sorted(os.listdir(tmp_dir))[:]:
+    img = mmcv.imread(osp.join(tmp_dir, img_name))
+
+    # model.cfg = cfg
+    result = inference_segmentor(model, img)
+    # plt.figure(figsize=(8, 6))
+    img_array = np.asarray(img)
+    # print(len(img_array), len(img_array[0]))
+    seg_mat = np.zeros((len(img_array), len(img_array[0])))
+    for i in range(len(result[0])):
+        for j in range(len(result[0][0])):
+            seg_mat[i][j] = result[0][i][j]
+    # seg_mat[0][0] = list(seg_mat[0][0])
+    # seg_mat[0][0] = seg_mat[0][0][0]
+    # print(seg_mat)
+    seg_img = Image.fromarray(seg_mat).convert('P')
+    seg_img.putpalette(np.array(palette, dtype=np.uint8))
+    # plt.figure(figsize=(8, 6))
+    # im = plt.imshow(np.array(seg_img.convert('RGB')))
+    seg_img.save(osp.join(save_dir, img_name))
+
+# plt.show()
+# show_result_pyplot(model, img, result, palette)

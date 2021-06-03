@@ -11,7 +11,7 @@ from mmseg.models import build_segmentor
 from mmseg.apis import train_segmentor
 
 #dirs config
-data_root = './linemod'
+data_root = './data/linemod/01'
 img_dir = 'images'
 ann_dir = 'annotations'
 
@@ -116,7 +116,7 @@ cfg.data.test.pipeline = cfg.test_pipeline
 cfg.data.test.split = 'splits/val.txt'
 
 # Set up working dir to save files and logs.
-cfg.work_dir = './work_dirs/'
+cfg.work_dir = './ape/'
 
 cfg.runner.max_iters = 10000
 cfg.log_config.interval = 10
@@ -137,6 +137,7 @@ datasets = [build_dataset(cfg.data.train)]
 # Build the detector
 model = build_segmentor(
     cfg.model, train_cfg=cfg.get('train_cfg'), test_cfg=cfg.get('test_cfg'))
+# print('datasets[0]: ', datasets[0].PALETTE)
 # Add an attribute for visualization convenience
 model.CLASSES = datasets[0].CLASSES
 model.PALETTE = datasets[0].PALETTE
