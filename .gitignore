@@ -30,6 +30,7 @@
 *.exe
 *.out
 *.app
+.DS_Store
 mask_rcnn/mask_rcnn_coco.h5
 mask_rcnn/data
 mmlab/linemod
