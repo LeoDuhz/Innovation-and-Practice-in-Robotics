@@ -9,13 +9,27 @@ from mmseg.apis import set_random_seed
 from mmseg.datasets import build_dataset
 from mmseg.models import build_segmentor
 from mmseg.apis import train_segmentor
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--obj_id', type=int, default = 1, help='data id')
+opt = parser.parse_args()
+
+object_id = opt.obj_id
+
+if object_id < 10:
+    object_id_str = '0' + str(object_id)
+else:
+    object_id_str = str(object_id)
 
 #dirs config
-data_root = './data/linemod/01'
+data_root = osp.join('./data/linemod', object_id_str)
 img_dir = 'images'
 ann_dir = 'annotations'
+model_save_path = osp.join('./data/linemod', object_id_str, 'model')
 
-classes = ('others', 'ape')
+obj_name_list = ['ape', 'benchvise', 'None', 'cam', 'can', 'cat', 'None', 'driller', 'duck', 'eggbox', 'glue', 'holepuncher', 'iron', 'lamp', 'phone']
+classes = ('others', obj_name_list[object_id-1])
 palette = [[0,0,0], [255,255,255]]
 
 #split train/val dataset randomly
@@ -27,6 +41,7 @@ filename_list = [osp.splitext(filename)[0] for filename in mmcv.scandir(
 with open(osp.join(data_root, split_dir, 'train.txt'), 'w') as f:
   # select first 4/5 as train set
   train_length = int(len(filename_list)*4/5)
+#   print('train_length: ', train_length)
   f.writelines(line + '\n' for line in filename_list[:train_length])
 with open(osp.join(data_root, split_dir, 'val.txt'), 'w') as f:
   # select last 1/5 as train set
@@ -116,7 +131,7 @@ cfg.data.test.pipeline = cfg.test_pipeline
 cfg.data.test.split = 'splits/val.txt'
 
 # Set up working dir to save files and logs.
-cfg.work_dir = './ape/'
+cfg.work_dir = model_save_path 
 
 cfg.runner.max_iters = 10000
 cfg.log_config.interval = 10

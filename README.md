@@ -11,5 +11,6 @@
 - [x] Construct MMLab segmentation dataset
 - [x] Train in MMLab
 - [x] Use our mask in REDE to evaluate
+- [ ] Write our own fast s-cnn
 - [ ] Use our mask in REDE to train
 - [ ] Mask-RCNN linemod dataset preprocess

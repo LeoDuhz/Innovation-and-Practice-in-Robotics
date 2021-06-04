@@ -15,6 +15,14 @@ from mmseg.core.evaluation import get_palette
 from numpy.core.records import array
 import torch
 import numpy as np
+import argparse
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--obj_id', type=int, default = 1, help='data id')
+opt = parser.parse_args()
+
+object_id = opt.obj_id
 
 def mkdir_or_exist(path):
     exist_flag = osp.exists(path)
@@ -22,7 +30,13 @@ def mkdir_or_exist(path):
         os.makedirs(path)
 
 #dirs config
-data_root = './data/linemod/01'
+if object_id < 10:
+    object_id_str = '0' + str(object_id)
+else:
+    object_id_str = str(object_id)
+
+#dirs config
+data_root = osp.join('./data/linemod', object_id_str)
 img_dir = 'images'
 ann_dir = 'annotations'
 
@@ -156,14 +170,14 @@ datasets = [build_dataset(cfg.data.train)]
 # train_segmentor(model, datasets, cfg, distributed=False, validate=True, 
 #                 meta=dict())
 
-checkpoint_file = './ape/iter_8000.pth'
+checkpoint_file = osp.join(data_root, 'model', 'iter_10000.pth')
 config_file = './fast_scnn.py'
 model = init_segmentor(cfg, checkpoint_file, device='cuda:0')
 # model = build_segmentor(
 #     cfg.model, train_cfg=cfg.get('train_cfg'), test_cfg=cfg.get('test_cfg'))
 
-tmp_dir = 'data/linemod/01/images'
-save_dir = 'data/linemod/01/our_mask_new'
+tmp_dir = osp.join(data_root, 'fuse')#'images')
+save_dir = osp.join(data_root, 'fuse_mask')#'our_mask')
 mkdir_or_exist(save_dir)
 for img_name in sorted(os.listdir(tmp_dir))[:]:
     img = mmcv.imread(osp.join(tmp_dir, img_name))

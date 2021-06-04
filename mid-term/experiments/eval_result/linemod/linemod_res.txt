@@ -1,0 +1,28 @@
+Object 1 average distance: 0.004311179005156908
+Object 2 average distance: 0.003318508210128036
+Object 4 average distance: 0.004084898813100215
+Object 5 average distance: 0.003266663780819319
+Object 6 average distance: 0.0033250321111270896
+Object 8 average distance: 0.004372912466200043
+Object 9 average distance: 0.004555763039936532
+Object 10 average distance: 0.004606110509485006
+Object 11 average distance: 0.004400128498673439
+Object 12 average distance: 0.0035710133867740547
+Object 13 average distance: 0.0040335927621644434
+Object 14 average distance: 0.0037423121002490975
+Object 15 average distance: 0.004140509818934108
+ALL average distance: 0.003983390138321224
+Object 1 success rate: 0.9619047619047619
+Object 2 success rate: 0.9980601357904947
+Object 4 success rate: 0.9970588235294118
+Object 5 success rate: 0.9990157480314961
+Object 6 success rate: 0.9940119760479041
+Object 8 success rate: 0.9960356788899901
+Object 9 success rate: 0.9708920187793427
+Object 10 success rate: 1.0
+Object 11 success rate: 1.0
+Object 12 success rate: 0.9904852521408183
+Object 13 success rate: 0.9959141981613892
+Object 14 success rate: 0.9961612284069098
+Object 15 success rate: 0.9951969260326609
+ALL success rate: 0.9917953307973447
