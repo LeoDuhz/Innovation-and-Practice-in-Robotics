@@ -12,6 +12,6 @@
 - [x] Train in MMLab
 - [x] Use our mask in REDE to evaluate
 - [ ] Write our own fast s-cnn
-- [ ] Train and generate fuse pictures mask model for future REDE training
+- [x] Train and generate fuse pictures mask model for future REDE training
 - [ ] Use our mask in REDE to train
 - [ ] Mask-RCNN linemod dataset preprocess
