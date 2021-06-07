@@ -37,11 +37,13 @@ else:
 
 #dirs config
 data_root = osp.join('./data/linemod', object_id_str)
+# data_root = './data/linemod/fuse'
+
 img_dir = 'images'
 ann_dir = 'annotations'
 
 classes = ('others', 'ape')
-palette = [[0,0,0], [255,255,255]]
+palette = [[0,0,0], [255,0,0]]
 
 #split train/val dataset randomly
 split_dir = 'splits'
@@ -176,15 +178,26 @@ model = init_segmentor(cfg, checkpoint_file, device='cuda:0')
 # model = build_segmentor(
 #     cfg.model, train_cfg=cfg.get('train_cfg'), test_cfg=cfg.get('test_cfg'))
 
-tmp_dir = osp.join(data_root, 'fuse')#'images')
-save_dir = osp.join(data_root, 'fuse_mask')#'our_mask')
+tmp_dir = osp.join(data_root, 'images')
+save_dir = osp.join(data_root, 'our_mask')
+
+img = mmcv.imread(osp.join(tmp_dir, '0002.png'))
+result = inference_segmentor(model, img)
+img_array = np.asarray(img)
+for i in range(len(result[0])):
+    for j in range(len(result[0][0])):
+        if result[0][i][j] != 0:
+            img_array[i][j] = np.array([101, 67, 254])
+img_array = img_array[:,:,::-1]
+seg_img = Image.fromarray(img_array)
+seg_img.save(osp.join(data_root, '0002.png'))
+'''
 mkdir_or_exist(save_dir)
 for img_name in sorted(os.listdir(tmp_dir))[:]:
     img = mmcv.imread(osp.join(tmp_dir, img_name))
 
     # model.cfg = cfg
     result = inference_segmentor(model, img)
-    # plt.figure(figsize=(8, 6))
     img_array = np.asarray(img)
     # print(len(img_array), len(img_array[0]))
     seg_mat = np.zeros((len(img_array), len(img_array[0])))
@@ -199,6 +212,7 @@ for img_name in sorted(os.listdir(tmp_dir))[:]:
     # plt.figure(figsize=(8, 6))
     # im = plt.imshow(np.array(seg_img.convert('RGB')))
     seg_img.save(osp.join(save_dir, img_name))
+'''
 
 # plt.show()
 # show_result_pyplot(model, img, result, palette)

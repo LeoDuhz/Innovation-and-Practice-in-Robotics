@@ -9,6 +9,7 @@ from mmseg.apis import set_random_seed
 from mmseg.datasets import build_dataset
 from mmseg.models import build_segmentor
 from mmseg.apis import train_segmentor
+from mmseg.apis import inference_segmentor, init_segmentor, show_result_pyplot
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -23,10 +24,13 @@ else:
     object_id_str = str(object_id)
 
 #dirs config
-data_root = osp.join('./data/linemod', object_id_str)
+# data_root = osp.join('./data/linemod', object_id_str)
+data_root = './data/linemod/fuse_lamp'
 img_dir = 'images'
 ann_dir = 'annotations'
-model_save_path = osp.join('./data/linemod', object_id_str, 'model')
+# model_save_path = osp.join('./data/linemod', object_id_str, 'model')
+model_save_path = osp.join('./data/linemod/fuse_lamp', 'model')
+
 
 obj_name_list = ['ape', 'benchvise', 'None', 'cam', 'can', 'cat', 'None', 'driller', 'duck', 'eggbox', 'glue', 'holepuncher', 'iron', 'lamp', 'phone']
 classes = ('others', obj_name_list[object_id-1])
@@ -75,7 +79,7 @@ cfg.dataset_type = 'LineModDataset'
 cfg.data_root = data_root
 
 cfg.data.samples_per_gpu = 8
-cfg.data.workers_per_gpu=8
+cfg.data.workers_per_gpu= 8
 
 cfg.img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
@@ -135,7 +139,7 @@ cfg.work_dir = model_save_path
 
 cfg.runner.max_iters = 10000
 cfg.log_config.interval = 10
-cfg.evaluation.interval = 200
+cfg.evaluation.interval = 1000
 cfg.checkpoint_config.interval = 200
 
 # Set seed to facitate reproducing the result
@@ -149,9 +153,13 @@ print(f'Config:\n{cfg.pretty_text}')
 # Build the dataset
 datasets = [build_dataset(cfg.data.train)]
 
+# checkpoint_file = osp.join(data_root, 'model', 'iter_1600.pth')
+# model = init_segmentor(cfg, checkpoint_file, device='cuda:0')
 # Build the detector
+
 model = build_segmentor(
     cfg.model, train_cfg=cfg.get('train_cfg'), test_cfg=cfg.get('test_cfg'))
+
 # print('datasets[0]: ', datasets[0].PALETTE)
 # Add an attribute for visualization convenience
 model.CLASSES = datasets[0].CLASSES
