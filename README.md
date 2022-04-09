@@ -18,7 +18,7 @@
 
 进阶任务：
 
-![Screenshot from 2022-04-09 21-23-31](README.assets/Screenshot from 2022-04-09 21-23-31.png)
+![Screenshot from 2022-04-09 21-23-31](https://github.com/LeoDuhz/Innovation-and-Practice-in-Robotics/blob/master/README.assets/Screenshot%20from%202022-04-09%2021-23-31.png)
 
 
 
