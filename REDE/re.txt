@@ -1,0 +1,10 @@
+numpy
+Cython
+matplotlib
+opencv_python==3.4.8.29
+pyyaml
+scipy
+scikit-learn
+tensorboardX
+torchgeometry
+cffi

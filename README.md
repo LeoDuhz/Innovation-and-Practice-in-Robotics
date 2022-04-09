@@ -11,7 +11,15 @@
 - [x] Construct MMLab segmentation dataset
 - [x] Train in MMLab
 - [x] Use our mask in REDE to evaluate
-- [ ] Write our own fast s-cnn
 - [x] Train and generate fuse pictures mask model for future REDE training
-- [ ] Use our mask in REDE to train
-- [ ] Mask-RCNN linemod dataset preprocess
+- [x] Use our mask in REDE to train
+
+
+
+进阶任务：
+
+![Screenshot from 2022-04-09 21-23-31](README.assets/Screenshot from 2022-04-09 21-23-31.png)
+
+
+
+For more details, please refer to our code and our ppt presentation.

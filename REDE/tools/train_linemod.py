@@ -32,7 +32,7 @@ parser.add_argument('--iteration', type=int, default=2, help='number of refineme
 parser.add_argument('--real', type=bool, default=True, help='use real data or not')
 parser.add_argument('--render', type=bool, default=False, help='use render data or not')
 parser.add_argument('--fuse', type=bool, default=True, help='use fuse data or not')
-parser.add_argument('--nepoch', type=int, default=60, help='max number of epochs to train')
+parser.add_argument('--nepoch', type=int, default=300, help='max number of epochs to train')
 parser.add_argument('--start_epoch', type=int, default=1, help='which epoch to start')
 parser.add_argument('--resume_posenet', type=str, default='',  help='resume PoseNet model')
 parser.add_argument('--resume_refinenet', type=str, default='',  help='resume PoseRefineNet model')

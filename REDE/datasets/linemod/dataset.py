@@ -54,12 +54,13 @@ class PoseDataset(data.Dataset):
                 self.list_pose.append('{0}/renders/{1}/{2}_RT.pkl'.format(self.root, '%02d' % self.obj_id, i))
 
         if fuse:
-            # for i in range(9845):
-            for img_name in os.listdir(osp.join(self.root, 'fuse/images')):
+            # for i in range(10000):
+            for img_name in os.listdir(osp.join(self.root, 'our_seg_result/fuse_ape/images')):
                 i = osp.splitext(img_name)[0]
                 self.list_rgb.append('{0}/fuse/{1}_rgb.jpg'.format(self.root, i))
                 self.list_depth.append('{0}/fuse/{1}_depth.png'.format(self.root, i))
-                self.list_label.append('{0}/fuse/our_mask/{1}.png'.format(self.root, i))
+                # self.list_label.append('{0}/fuse/{1}_mask.png'.format(self.root, i))
+                self.list_label.append('{0}/our_seg_result/fuse_ape/our_mask/{1}.png'.format(self.root, i))
                 self.list_pose.append('{0}/fuse/{1}_info.pkl'.format(self.root, i))
 
         self.pt = ply_vtx('{0}/models/obj_{1}.ply'.format(self.root, '%02d' % self.obj_id))
